@@ -788,45 +788,50 @@ too much. The value specified here is the number of clock cycles between a step 
 If the interval at full speed is below this value, smoothing is disabled for that line.*/
 #define MAX_HALFSTEP_INTERVAL 1999
 
-//// Acceleration settings
 
-/** \brief X, Y, Z max acceleration in mm/s^2 for printing moves or retracts. Make sure your printer can go that high! 
- Overridden if EEPROM activated.
-*/
-#define MAX_ACCELERATION_UNITS_PER_SQ_SECOND_X 1000
-#define MAX_ACCELERATION_UNITS_PER_SQ_SECOND_Y 1000
-#define MAX_ACCELERATION_UNITS_PER_SQ_SECOND_Z 1000
 
-/** \brief X, Y, Z max acceleration in mm/s^2 for travel moves.  Overridden if EEPROM activated.*/
-#define MAX_TRAVEL_ACCELERATION_UNITS_PER_SQ_SECOND_X 1000
-#define MAX_TRAVEL_ACCELERATION_UNITS_PER_SQ_SECOND_Y 1000
-#define MAX_TRAVEL_ACCELERATION_UNITS_PER_SQ_SECOND_Z 1000
 
-/** \brief Maximum allowable jerk.
+//######################################################################
+//##                   Acceleration settings                          ##
+//######################################################################
 
-Caution: This is no real jerk in a physical meaning.
+// X, Y, Z max acceleration in mm/s^2 for printing moves or retracts. Overridden if EEPROM activated.
 
+#define MAX_ACCELERATION_UNITS_PER_SQ_SECOND_X 975
+#define MAX_ACCELERATION_UNITS_PER_SQ_SECOND_Y 975
+#define MAX_ACCELERATION_UNITS_PER_SQ_SECOND_Z 975
+
+// X, Y, Z max acceleration in mm/s^2 for travel (non-printing) moves.  Overridden if EEPROM activated.
+#define MAX_TRAVEL_ACCELERATION_UNITS_PER_SQ_SECOND_X 850
+#define MAX_TRAVEL_ACCELERATION_UNITS_PER_SQ_SECOND_Y 850
+#define MAX_TRAVEL_ACCELERATION_UNITS_PER_SQ_SECOND_Z 850
+
+
+
+
+
+
+//##################### Jerk Settings #################################
+/*        Settings are overriden if eeprom is enabled
 The jerk determines your start speed and the maximum speed at the join of two segments.
 It's unit is mm/s. If the printer is standing still, the start speed is jerk/2. At the
 join of two segments, the speed difference is limited to the jerk value.
 
 Examples:
 For all examples jerk is assumed as 40.
-
 Segment 1: vx = 50, vy = 0
 Segment 2: vx = 0, vy = 50
 v_diff = sqrt((50-0)^2+(0-50)^2) = 70.71
 v_diff > jerk => vx_1 = vy_2 = jerk/v_diff*vx_1 = 40/70.71*50 = 28.3 mm/s at the join
-
 Segment 1: vx = 50, vy = 0
 Segment 2: vx = 35.36, vy = 35.36
 v_diff = sqrt((50-35.36)^2+(0-35.36)^2) = 38.27 < jerk
 Corner can be printed with full speed of 50 mm/s
-
-Overridden if EEPROM activated.
 */
-#define MAX_JERK  11.2
-#define MAX_ZJERK 11.2
+
+//Make these values the SAME for Delta printers
+#define MAX_JERK  10.7
+#define MAX_ZJERK 10.7
 
 /** \brief Number of moves we can cache in advance.
 
@@ -849,6 +854,10 @@ if you are printing many very short segments at high speed. Higher delays here a
 */
 #define LOW_TICKS_PER_MOVE 250000
 
+
+
+
+
 // ##########################################################################################
 // ##                           Extruder control                                           ##
 // ##########################################################################################
@@ -858,7 +867,7 @@ if you are printing many very short segments at high speed. Higher delays here a
 All known arduino boards use 64. This value is needed for the extruder timing. */
 #define TIMER0_PRESCALE 64
 
-/* \brief Minimum temperature for extruder operation
+/*  Minimum temperature for extruder operation
 
 This is a saftey value. If your extruder temperature is below this temperature, no
 extruder steps are executed. This is to prevent your extruder to move unless the fiament
@@ -867,7 +876,9 @@ it 0 as default.
 */
 
 #define MIN_EXTRUDER_TEMP 0
-/** \brief Activate ooze prevention system 
+
+
+/*   Activate ooze prevention system 
 
 The ooze prevention system tries to prevent ooze, by a fast retract of the filament every time
 printing stops. Most slicing software have already an option to do this. Using OPS_MODE=1 will
@@ -939,7 +950,7 @@ to activate the quadratic term. Only adds lots of computations and storage usage
 // ##                           Communication configuration                                ##
 // ##########################################################################################
 
-//// AD595 THERMOCOUPLE SUPPORT UNTESTED... USE WITH CAUTION!!!!
+//   AD595 THERMOCOUPLE SUPPORT UNTESTED... USE WITH CAUTION!!!!
 
 /** \brief Communication speed.
 
@@ -953,6 +964,7 @@ to activate the quadratic term. Only adds lots of computations and storage usage
 */
 //#define BAUDRATE 76800
 //#define BAUDRATE 57600
+//#define BAUDRATE 115200 //uncomment this line for Linux and comment out the 250000 line
 #define BAUDRATE 250000
 
 /**
@@ -991,31 +1003,31 @@ and it is elsewise difficult to know, what your reprap is currently doing.
 */
 #define ECHO_ON_EXECUTE
 
-/** \brief EEPROM storage mode 
 
+
+/* ########################################################################################
+   ##                               EEPROM and SD Card SETTINGS                          ##
+   ########################################################################################  
 Set the EEPROM_MODE to 0 if you always wan't to use the settings in this configuration file. If not,
-set it to a value not stored in the first EEPROM-byte used. If you later want to overwrite your current
-eeprom settings with configuration defaults, just select an other value. On the first call to epr_init()
-it will detect a mismatch of the first byte and copys default values into EEPROM. If the first byte
-matches, the stored values are used to overwrite the settings.
+set it to 1. If you later want to overwrite your current
+eeprom settings with configuration defaults, just change EEPROM_MODE to 0 and upload, then power cycle your board.
 
-IMPORTANT: With mode <>0 some changes in configuration.h are not set any more, as they are 
-           taken from the EEPROM.
+IMPORTANT: With mode 1 some changes in configuration.h are not set any more, as they are 
+           taken from the EEPROM.  If you have changed your firmware, and uploaded it, and the
+           values havn't changed, it's prob. because you have eeprom mode 1 selected.
 */
 #define EEPROM_MODE 1
 
-#define SDSUPPORT true
 
-/** Set to false to disable SD support: */
+//  SD Card Settings
+#define SDSUPPORT true   // Set to false to disable SD support
 #ifndef SDSUPPORT  // Some boards have sd support on board. These define the values already in pins.h
 #define SDSUPPORT false
-/** If set to false all files with longer names then 8.3 or having a tilde in the name will be hidden */
-#define SD_ALLOW_LONG_NAMES false
-// Uncomment to enable or changed card detection pin. With card detection the card is mounted on insertion.
-#define SDCARDDETECT 81
-// Change to true if you get a inserted message on removal. 
-#define SDCARDDETECTINVERTED false
+#define SD_ALLOW_LONG_NAMES false  // If set to false all files with longer names then 8.3 or having a tilde in the name will be hidden 
+#define SDCARDDETECT 81  // Uncomment to enable or changed card detection pin. With card detection the card is mounted on insertion 
+#define SDCARDDETECTINVERTED false  // Change to true if you get a inserted message on removal.
 #endif
+
 /** Show extended directory including file length. Don't use this with pronterface! */
 #define SD_EXTENDED_DIR
 // If you want support for G2/G3 arc commands set to true, otherwise false.
