@@ -88,40 +88,30 @@ the wrong direction change INVERT_X_DIR or INVERT_Y_DIR.
 /** Drive settings for the Delta printers
 */
 #if DRIVE_SYSTEM==3
-/** \brief Delta drive type: 0 - belts and pulleys, 1 - filament drive
-*/
+
+//  Delta drive type: 0 - belts and pulleys Like Rostock/Rostock MAX, 1 - filament drive like Kossel/Cerebrus (using fishing line etc...)
+
 #define DELTA_DRIVE_TYPE 0
 
 #if DELTA_DRIVE_TYPE == 0
-/** \brief Pitch in mm of drive belt. GT2 = 2mm
-*/
-#define BELT_PITCH 2
-
-/** \brief Number of teeth on X, Y and Z tower pulleys
-*/
-#define PULLEY_TEETH 15
+#define BELT_PITCH 2  // Pitch in mm of drive belt. GT2 = 2mm  T2.5=2.5 etc...
+#define PULLEY_TEETH 15  // how many teeth on the timing pulley
 #define PULLEY_CIRCUMFERENCE (BELT_PITCH * PULLEY_TEETH)
+
+
 
 #elif DELTA_DRIVE_TYPE == 1
 
-/** \brief Filament pulley diameter in milimeters
-*/
-#define PULLEY_DIAMETER 10
-
+#define PULLEY_DIAMETER 10  //    pulley diameter in milimeters on stepper motors - THIS IS FOR STRING DRIVEN SETUPS LIKE KOSSEL, CEREBRUS ETC....
 #define PULLEY_CIRCUMFERENCE (PULLEY_DIAMETER * 3.1415927)  
-
 #endif
 
 
-/** \brief Steps per rotation of stepper motor
-*/
-#define STEPS_PER_ROTATION 200
 
-/** \brief Micro stepping rate of X, Y and Y tower stepper drivers
-*/
-#define MICRO_STEPS 16
+#define STEPS_PER_ROTATION 200  // 200 is common, which are 1.8 degree per step motors, .9 degree motors would be 400 steps per rotation
+#define MICRO_STEPS 16          // RAMBo 1.0 and earlier use 8 (1/8 stepping), 1.1 and on uses 16 (1/16 stepping) RAMPS and Pololu drivers are normally 16
 
-/** \brief Number of delta moves in each line. Moves that exceed this figure will be split into multiple lines.
+/*Number of delta moves in each line. Moves that exceed this figure will be split into multiple lines.
 Increasing this figure can use a lot of memory since 7 bytes * size of line buffer * MAX_SELTA_SEGMENTS_PER_LINE
 will be allocated for the delta buffer. With defaults 7 * 16 * 30 = 3360 bytes. This leaves ~1K free RAM on an Arduino
 Mega.
@@ -803,14 +793,14 @@ If the interval at full speed is below this value, smoothing is disabled for tha
 /** \brief X, Y, Z max acceleration in mm/s^2 for printing moves or retracts. Make sure your printer can go that high! 
  Overridden if EEPROM activated.
 */
-#define MAX_ACCELERATION_UNITS_PER_SQ_SECOND_X 1200
-#define MAX_ACCELERATION_UNITS_PER_SQ_SECOND_Y 1200
-#define MAX_ACCELERATION_UNITS_PER_SQ_SECOND_Z 1200
+#define MAX_ACCELERATION_UNITS_PER_SQ_SECOND_X 1000
+#define MAX_ACCELERATION_UNITS_PER_SQ_SECOND_Y 1000
+#define MAX_ACCELERATION_UNITS_PER_SQ_SECOND_Z 1000
 
 /** \brief X, Y, Z max acceleration in mm/s^2 for travel moves.  Overridden if EEPROM activated.*/
-#define MAX_TRAVEL_ACCELERATION_UNITS_PER_SQ_SECOND_X 1500
-#define MAX_TRAVEL_ACCELERATION_UNITS_PER_SQ_SECOND_Y 1500
-#define MAX_TRAVEL_ACCELERATION_UNITS_PER_SQ_SECOND_Z 1500
+#define MAX_TRAVEL_ACCELERATION_UNITS_PER_SQ_SECOND_X 1000
+#define MAX_TRAVEL_ACCELERATION_UNITS_PER_SQ_SECOND_Y 1000
+#define MAX_TRAVEL_ACCELERATION_UNITS_PER_SQ_SECOND_Z 1000
 
 /** \brief Maximum allowable jerk.
 
@@ -835,8 +825,8 @@ Corner can be printed with full speed of 50 mm/s
 
 Overridden if EEPROM activated.
 */
-#define MAX_JERK 27.0
-#define MAX_ZJERK 27.0
+#define MAX_JERK  11.2
+#define MAX_ZJERK 11.2
 
 /** \brief Number of moves we can cache in advance.
 
