@@ -1,11 +1,16 @@
 Repetier Firmware maintained by SeeMeCNC for the Rostock MAX Delta 3D Printers
 Questions/Comments, email john@seemecnc.com
 
+
+Use with Arduino 1.0 and up, will not work with earlier versions
+
+
+
 ################ Changelog ########################
 
 4/9/2013			Initial upload.  Set up for RepRapDiscount LCD controller, printed very well 
 4/10/2013		Initialized eeprom storage, so you can make changes from Repetier Host Software
-
+4/10/2013		Adjusted Accel settings, added clearer logic to some explanations of delta values
 
 
 
