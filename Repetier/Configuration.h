@@ -792,46 +792,27 @@ If the interval at full speed is below this value, smoothing is disabled for tha
 
 
 //######################################################################
-//##                   Acceleration settings                          ##
+//##            Acceleration and Jerk settings                        ##
 //######################################################################
 
 // X, Y, Z max acceleration in mm/s^2 for printing moves or retracts. Overridden if EEPROM activated.
 
-#define MAX_ACCELERATION_UNITS_PER_SQ_SECOND_X 975
-#define MAX_ACCELERATION_UNITS_PER_SQ_SECOND_Y 975
-#define MAX_ACCELERATION_UNITS_PER_SQ_SECOND_Z 975
+#define MAX_ACCELERATION_UNITS_PER_SQ_SECOND_X 1500
+#define MAX_ACCELERATION_UNITS_PER_SQ_SECOND_Y 1500
+#define MAX_ACCELERATION_UNITS_PER_SQ_SECOND_Z 1500
 
 // X, Y, Z max acceleration in mm/s^2 for travel (non-printing) moves.  Overridden if EEPROM activated.
-#define MAX_TRAVEL_ACCELERATION_UNITS_PER_SQ_SECOND_X 850
-#define MAX_TRAVEL_ACCELERATION_UNITS_PER_SQ_SECOND_Y 850
-#define MAX_TRAVEL_ACCELERATION_UNITS_PER_SQ_SECOND_Z 850
+#define MAX_TRAVEL_ACCELERATION_UNITS_PER_SQ_SECOND_X 1500
+#define MAX_TRAVEL_ACCELERATION_UNITS_PER_SQ_SECOND_Y 1500
+#define MAX_TRAVEL_ACCELERATION_UNITS_PER_SQ_SECOND_Z 1500
+
+
+// Make the Jerk Settings identical for Delta printers
+#define MAX_JERK  9.0
+#define MAX_ZJERK 9.0
 
 
 
-
-
-
-//##################### Jerk Settings #################################
-/*        Settings are overriden if eeprom is enabled
-The jerk determines your start speed and the maximum speed at the join of two segments.
-It's unit is mm/s. If the printer is standing still, the start speed is jerk/2. At the
-join of two segments, the speed difference is limited to the jerk value.
-
-Examples:
-For all examples jerk is assumed as 40.
-Segment 1: vx = 50, vy = 0
-Segment 2: vx = 0, vy = 50
-v_diff = sqrt((50-0)^2+(0-50)^2) = 70.71
-v_diff > jerk => vx_1 = vy_2 = jerk/v_diff*vx_1 = 40/70.71*50 = 28.3 mm/s at the join
-Segment 1: vx = 50, vy = 0
-Segment 2: vx = 35.36, vy = 35.36
-v_diff = sqrt((50-35.36)^2+(0-35.36)^2) = 38.27 < jerk
-Corner can be printed with full speed of 50 mm/s
-*/
-
-//Make these values the SAME for Delta printers
-#define MAX_JERK  10.7
-#define MAX_ZJERK 10.7
 
 /** \brief Number of moves we can cache in advance.
 
