@@ -95,7 +95,7 @@ the wrong direction change INVERT_X_DIR or INVERT_Y_DIR.
 
 #if DELTA_DRIVE_TYPE == 0
 #define BELT_PITCH 2  // Pitch in mm of drive belt. GT2 = 2mm  T2.5=2.5 etc...
-#define PULLEY_TEETH 15  // how many teeth on the timing pulley
+#define PULLEY_TEETH 20  // how many teeth on the timing pulley
 #define PULLEY_CIRCUMFERENCE (BELT_PITCH * PULLEY_TEETH)
 
 
@@ -129,13 +129,13 @@ Mega.
 /** \brief Number of steps for a 1mm move in x direction. 
 For xy gantry use 2*belt moved!
 Overridden if EEPROM activated. */
-#define XAXIS_STEPS_PER_MM 106.666
+#define XAXIS_STEPS_PER_MM 80.00
 /** \brief Number of steps for a 1mm move in y direction.
 For xy gantry use 2*belt moved!
 Overridden if EEPROM activated.*/
-#define YAXIS_STEPS_PER_MM 106.666
+#define YAXIS_STEPS_PER_MM 80.00
 /** \brief Number of steps for a 1mm move in z direction  Overridden if EEPROM activated.*/
-#define ZAXIS_STEPS_PER_MM 106.666
+#define ZAXIS_STEPS_PER_MM 80.00
 #endif
 
 // ##########################################################################################
@@ -181,13 +181,13 @@ Overridden if EEPROM activated.*/
 // length of filament pulled inside the heater. For repsnap or older
 // skeinforge use hiher values.
 //  Overridden if EEPROM activated.
-#define EXT0_MAX_FEEDRATE 50
+#define EXT0_MAX_FEEDRATE 45
 // Feedrate from halted extruder in mm/s
 //  Overridden if EEPROM activated.
-#define EXT0_MAX_START_FEEDRATE 20
+#define EXT0_MAX_START_FEEDRATE 40
 // Acceleration in mm/s^2
 //  Overridden if EEPROM activated.
-#define EXT0_MAX_ACCELERATION 4500
+#define EXT0_MAX_ACCELERATION 6500
 /** Type of heat manager for this extruder. 
 - 0 = Simply switch on/off if temperature is reached. Works always.
 - 1 = PID Temperature control. Is better but needs good PID values. Defaults are a good start for most extruder.
@@ -451,7 +451,7 @@ You can use the beta from the datasheet or compute it yourself. See
 http://reprap.org/wiki/MeasuringThermistorBeta
 for more details.
 */
-#define GENERIC_THERM1_BETA 4267
+#define GENERIC_THERM1_BETA 4450 //default was 4267
 /** Start temperature for generated thermistor table */
 #define GENERIC_THERM1_MIN_TEMP -20
 /** End Temperature for generated thermistor table */
